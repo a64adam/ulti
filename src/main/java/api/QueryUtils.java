@@ -3,7 +3,7 @@ package api;
 import com.google.common.base.Joiner;
 
 /**
- * Utility class to prepare parts of a query and to validate that the input is allowed
+ * Utility class to prepare parts of a apiQuery and to validate that the input is allowed
  */
 class QueryUtils {
     private static Joiner joiner = Joiner.on(",");

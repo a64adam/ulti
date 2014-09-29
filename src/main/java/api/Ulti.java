@@ -16,13 +16,15 @@ import dto.summoner.RunePages;
 import dto.summoner.Summoner;
 import dto.team.Team;
 
-import static api.QueryUtils.*;
-
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static api.QueryUtils.normalize;
+import static api.QueryUtils.passLengthConstraint;
+import static api.QueryUtils.prepare;
 
 public class Ulti {
 
@@ -47,14 +49,15 @@ public class Ulti {
     private final Gson gson;
 
     public Ulti(String apiKey) {
-        api = new QueryManager(apiKey);
+        api = QueryManager.getInstance();
+        api.setApiKey(apiKey);
+
         gson = new Gson();
     }
 
     public Ulti(String apiKey, Region region) {
         this(apiKey);
-
-        api.setEndpoint(region);
+        api.setRegion(region);
     }
 
     /**
@@ -90,7 +93,7 @@ public class Ulti {
      * @return  championList containing a list of {@link dto.champion.Champion}.
      */
     public ChampionList getChampions() {
-        Reader json = api.query(versions.get("champion") + "/champion");
+        Reader json = api.apiQuery(versions.get("champion") + "/champion");
 
         return gson.fromJson(json, ChampionList.class);
     }
@@ -103,7 +106,7 @@ public class Ulti {
      * @return  a {@link dto.champion.Champion} with the specified champion id
      */
     public Champion getChampionById(int championId) {
-        Reader json = api.query(versions.get("champion") + "/champion/" + championId);
+        Reader json = api.apiQuery(versions.get("champion") + "/champion/" + championId);
 
         return gson.fromJson(json, Champion.class);
     }
@@ -120,7 +123,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("summoner") + "/summoner/by-name/" + prepare(championNames));
+        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/by-name/" + prepare(championNames));
         Type type = new TypeToken<Map<String, Summoner>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -150,7 +153,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds));
+        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, Summoner>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -179,7 +182,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/masteries");
+        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/masteries");
         Type type = new TypeToken<Map<String, MasteryPages>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -204,7 +207,7 @@ public class Ulti {
      *          as the key
      */
     public Map<String, String> getSummonerNameById(Long... summonerIds) {
-        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/name");
+        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/name");
         Type type = new TypeToken<Map<String, String>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -233,7 +236,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(ids) + "/runes");
+        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(ids) + "/runes");
         Type type = new TypeToken<Map<String, RunePages>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -263,7 +266,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("team") + "/team/by-summoner/" + prepare(summonerIds));
+        Reader json = api.apiQuery(versions.get("team") + "/team/by-summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, List<Team>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -292,7 +295,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("team") + "/team/" + prepare(teamIds, false));
+        Reader json = api.apiQuery(versions.get("team") + "/team/" + prepare(teamIds, false));
         Type type = new TypeToken<Map<String, Team>>() {
         }.getType();
 
@@ -321,7 +324,7 @@ public class Ulti {
      */
     @Deprecated
     public RecentGames getRecentGames(Long summonerId) {
-        Reader json = api.query(versions.get("game") + "/game/by-summoner/" + summonerId + "/recent");
+        Reader json = api.apiQuery(versions.get("game") + "/game/by-summoner/" + summonerId + "/recent");
 
         return gson.fromJson(json, RecentGames.class);
     }
@@ -338,7 +341,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds));
+        Reader json = api.apiQuery(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -367,7 +370,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds) + "/entry");
+        Reader json = api.apiQuery(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds) + "/entry");
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -398,7 +401,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("league") + "/league/by-team/" + prepare(teamIds, false));
+        Reader json = api.apiQuery(versions.get("league") + "/league/by-team/" + prepare(teamIds, false));
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -429,7 +432,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.query(versions.get("league") + "/league/by-team/" + prepare(teamIds, false) + "/entry");
+        Reader json = api.apiQuery(versions.get("league") + "/league/by-team/" + prepare(teamIds, false) + "/entry");
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -455,7 +458,7 @@ public class Ulti {
      *          currently in Challenger
      */
     public League getChallengers() {
-        Reader json = api.query(versions.get("league") + "/league/challenger");
+        Reader json = api.apiQuery(versions.get("league") + "/league/challenger");
 
         return gson.fromJson(json, League.class);
     }
@@ -467,7 +470,7 @@ public class Ulti {
      * @return  a {@link dto.stats.RankedStats} object containing all the stats for this summoner in ranked play
      */
     public RankedStats getRankedStatsBySummonerId(Long summonerId) {
-        Reader json = api.query(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/ranked");
+        Reader json = api.apiQuery(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/ranked");
 
         return gson.fromJson(json, RankedStats.class);
     }
@@ -480,7 +483,7 @@ public class Ulti {
      *          this summoner
      */
     public PlayerStatsSummaryList getStatsSummaryBySummonerId(Long summonerId) {
-        Reader json = api.query(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/summary");
+        Reader json = api.apiQuery(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/summary");
 
         return gson.fromJson(json, PlayerStatsSummaryList.class);
     }
@@ -492,7 +495,7 @@ public class Ulti {
      * @return  a {@link dto.match.MatchDetail} object containing detailed information for the given match
      */
     public MatchDetail getMatchById(Long matchId) {
-        Reader json = api.query(versions.get("match") + "/match/" + matchId);
+        Reader json = api.apiQuery(versions.get("match") + "/match/" + matchId);
 
         return gson.fromJson(json, MatchDetail.class);
     }
@@ -504,7 +507,7 @@ public class Ulti {
      * @return  a {@link dto.matchhistory.PlayerHistory} object containing all of the summoners match history
      */
     public PlayerHistory getMatchHistoryBySummonerId(Long summonerId) {
-        Reader json = api.query(versions.get("matchhistory") + "/matchhistory/" + summonerId);
+        Reader json = api.apiQuery(versions.get("matchhistory") + "/matchhistory/" + summonerId);
 
         return gson.fromJson(json, PlayerHistory.class);
     }

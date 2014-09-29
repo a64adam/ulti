@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 class QueryManager {
+    private static QueryManager queryManager = null;
+
     /**
      * Riot default API limits
      */
@@ -23,39 +25,79 @@ class QueryManager {
      */
     private static final Map<Region, String> endpoints = new HashMap<Region, String>();
     static {
-        endpoints.put(Region.NA, "https://na.api.pvp.net/api/lol/na/");
+        endpoints.put(Region.NA, "https://na.api.pvp.net/api/lol/");
+        endpoints.put(Region.EUW, "https://euw.api.pvp.net/api/lol/");
+        endpoints.put(Region.EUNE, "https://kr.api.pvp.net/api/lol/");
+        endpoints.put(Region.BR, "https://br.api.pvp.net/api/lol/");
+        endpoints.put(Region.LAS, "https://las.api.pvp.net/api/lol/");
+        endpoints.put(Region.LAN, "https://lan.api.pvp.net/api/lol/");
+        endpoints.put(Region.OCE, "https://oce.api.pvp.net/api/lol/");
+        endpoints.put(Region.TR, "https://tr.api.pvp.net/api/lol/");
+        endpoints.put(Region.RU, "https://ru.api.pvp.net/api/lol/");
+        endpoints.put(Region.GLOBAL, "https://global.api.pvp.net/api/lol/");
     }
 
     private String apiKey;
     private String endpoint;
+    private Region region;
 
     private final OkHttpClient client;
 
     private final RateLimiter shortRateLimiter;
     private final RateLimiter longRateLimiter;
 
-    public QueryManager(String apiKey) {
-        this.apiKey = apiKey;
+    static QueryManager getInstance() {
+        if (queryManager == null) {
+            queryManager = new QueryManager();
+        }
 
+        return queryManager;
+    }
+
+    private QueryManager() {
         client = new OkHttpClient();
 
         shortRateLimiter = RateLimiter.create(DEFAULT_SHORT_RATE_LIMIT);
         longRateLimiter = RateLimiter.create(DEFAULT_LONG_RATE_LIMIT);
 
         // Default endpoint to NA
-        setEndpoint(Region.NA);
+        endpoint = endpoints.get(Region.NA);
+
+        // Default region to NA
+        region = Region.NA;
     }
 
-    Reader query(String path) {
+    Reader apiQuery(String path) {
         // Obey the rate limit
         shortRateLimiter.acquire();
         longRateLimiter.acquire();
 
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + path + "?api_key=" + apiKey)
+                .url(endpoint + region + "/" + path + "?api_key=" + apiKey)
                 .build();
 
+        return exeucteRequest(request);
+    }
+
+    Reader staticQuery(String path) {
+        // Build request
+        Request request = new Request.Builder()
+                .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey)
+                .build();
+
+        return exeucteRequest(request);
+    }
+
+    Reader statusQuery(String path) {
+        Request request = new Request.Builder()
+                .url("http://status.leagueoflegends.com/" + path)
+                .build();
+
+        return exeucteRequest(request);
+    }
+
+    private Reader exeucteRequest(Request request) {
         // Get response
         Response response = null;
         try {
@@ -69,7 +111,6 @@ class QueryManager {
             handleErrorCode(response.code());
         }
 
-        // Return JSON as a Reader
         return response.body().charStream();
     }
 
@@ -92,6 +133,10 @@ class QueryManager {
         }
     }
 
+    void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
     void setShortRateLimit(int qps) {
         shortRateLimiter.setRate(qps);
     }
@@ -102,5 +147,9 @@ class QueryManager {
 
     void setEndpoint(Region region) {
         endpoint = endpoints.get(region);
+    }
+
+    void setRegion(Region region) {
+        this.region = region;
     }
 }
