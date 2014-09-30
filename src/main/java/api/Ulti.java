@@ -11,6 +11,8 @@ import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
+import dto.status.Shard;
+import dto.status.ShardStatus;
 import dto.summoner.MasteryPages;
 import dto.summoner.RunePages;
 import dto.summoner.Summoner;
@@ -43,6 +45,8 @@ public class Ulti {
         versions.put("match", "v2.2");
         versions.put("matchhistory", "v2.2");
         versions.put("stats", "v1.3");
+
+        versions.put("lol-status", "v1.0");
     }
 
     private final QueryManager api;
@@ -510,5 +514,29 @@ public class Ulti {
         Reader json = api.apiQuery(versions.get("matchhistory") + "/matchhistory/" + summonerId);
 
         return gson.fromJson(json, PlayerHistory.class);
+    }
+
+    /**
+     * Queries for the status of all LOL servers.
+     *
+     * @return  a {@link java.util.List} of {@link dto.status.Shard} objects reflecting the server status
+     */
+    public List<Shard> getServerStatus() {
+        Reader json = api.statusQuery("shards");
+        Type type = new TypeToken<List<Shard>>() {}.getType();
+
+        return gson.fromJson(json, type);
+    }
+
+    /**
+     * Queries for the status of a server status for the given {@code region}.
+     *
+     * @param   region region to query status for
+     * @return  a {@link dto.status.ShardStatus} object representing the server status for the {@code region}
+     */
+    public ShardStatus getServerStatus(Region region) {
+        Reader json = api.statusQuery("shards/" + region);
+
+        return gson.fromJson(json, ShardStatus.class);
     }
 }

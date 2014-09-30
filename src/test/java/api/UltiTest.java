@@ -1,5 +1,6 @@
 package api;
 
+import dto.Region;
 import dto.champion.Champion;
 import dto.champion.ChampionList;
 import dto.game.RecentGames;
@@ -8,6 +9,8 @@ import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
+import dto.status.Shard;
+import dto.status.ShardStatus;
 import dto.summoner.MasteryPages;
 import dto.summoner.RunePages;
 import dto.summoner.Summoner;
@@ -225,5 +228,26 @@ public class UltiTest {
     public void testGetTeamById() {
         Team team = ulti.getTeamById(teamId);
         Assert.assertNotNull(team);
+    }
+
+    /**
+     * @see api.Ulti#getServerStatus()
+     */
+    @Test
+    public void testGetServerStatus() {
+        List<Shard> l = ulti.getServerStatus();
+
+        for (Shard s : l) {
+            Assert.assertNotNull(s);
+        }
+    }
+
+    /**
+     * @see Ulti#getServerStatus(dto.Region)
+     */
+    @Test
+    public void testGetServerStatusByRegion() {
+        ShardStatus ss = ulti.getServerStatus(Region.NA);
+        Assert.assertNotNull(ss);
     }
 }
