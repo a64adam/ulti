@@ -57,8 +57,8 @@ class QueryManager {
     private QueryManager() {
         client = new OkHttpClient();
 
-        shortRateLimiter = RateLimiter.create(DEFAULT_SHORT_RATE_LIMIT);
         longRateLimiter = RateLimiter.create(DEFAULT_LONG_RATE_LIMIT);
+        shortRateLimiter = RateLimiter.create(DEFAULT_SHORT_RATE_LIMIT);
 
         // Default endpoint to NA
         endpoint = endpoints.get(Region.NA);
