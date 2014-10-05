@@ -7,6 +7,7 @@ import dto.champion.Champion;
 import dto.champion.ChampionList;
 import dto.game.RecentGames;
 import dto.league.League;
+import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
 import dto.staticdata.Item;
@@ -466,11 +467,15 @@ public class Ulti {
     /**
      * Queries for all the summoners currently in the Challenger league.
      *
+     * @param   queueType the {@link dto.league.QueueType} to query challengers from
      * @return  a {@link dto.league.League} object containing a {@link dto.league.LeagueEntry} for each summoner
      *          currently in Challenger
      */
-    public League getChallengers() {
-        Reader json = api.apiQuery(versions.get("league") + "/league/challenger");
+    public League getChallengers(QueueType queueType) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("type", queueType.toString());
+
+        Reader json = api.apiQuery(versions.get("league") + "/league/challenger", params);
 
         return gson.fromJson(json, League.class);
     }

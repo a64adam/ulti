@@ -5,6 +5,7 @@ import dto.champion.Champion;
 import dto.champion.ChampionList;
 import dto.game.RecentGames;
 import dto.league.League;
+import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
 import dto.staticdata.Item;
@@ -124,12 +125,13 @@ public class UltiTest {
     }
 
     /**
-     * @see Ulti#getChallengers()
+     * @see Ulti#getChallengers(dto.league.QueueType)
      */
     @Test
     public void testGetChallengers() {
-        League l = ulti.getChallengers();
-        Assert.assertNotNull(l);
+        for (QueueType qt : QueueType.values()) {
+            Assert.assertNotNull(ulti.getChallengers(qt));
+        }
     }
 
     /**

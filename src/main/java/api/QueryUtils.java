@@ -2,6 +2,9 @@ package api;
 
 import com.google.common.base.Joiner;
 
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * Utility class to prepare parts of a apiQuery and to validate that the input is allowed
  */
@@ -63,5 +66,19 @@ class QueryUtils {
 
     static String normalize(String name) {
         return name.toLowerCase().replaceAll("\\s+", "");
+    }
+
+    static String toStringList(Map<String, String> stringMap, String delim) {
+        Iterator<Map.Entry<String, String>> iter = stringMap.entrySet().iterator();
+        StringBuilder sb = new StringBuilder();
+
+        Map.Entry<String, String> entry = iter.next();
+        sb.append(entry.getKey() + "=" + entry.getValue());
+
+        while (iter.hasNext()) {
+            sb.append(delim + entry.getKey() + "=" + entry.getValue());
+        }
+
+        return sb.toString();
     }
 }

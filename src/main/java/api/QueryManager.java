@@ -68,13 +68,26 @@ class QueryManager {
     }
 
     Reader apiQuery(String path) {
+        return query(path, null);
+    }
+
+    Reader apiQuery(String path, Map<String, String> params) {
+        return query(path, params);
+    }
+
+    Reader query(String path, Map<String, String> params) {
         // Obey the rate limit
         shortRateLimiter.acquire();
         longRateLimiter.acquire();
 
+        String sParams = "";
+        if (params != null && !params.isEmpty()) {
+            sParams = "&" + QueryUtils.toStringList(params, "&");
+        }
+
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + region + "/" + path + "?api_key=" + apiKey)
+                .url(endpoint + region + "/" + path + "?api_key=" + apiKey + sParams)
                 .build();
 
         return exeucteRequest(request);
@@ -86,7 +99,6 @@ class QueryManager {
                 .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey)
                 .build();
 
-        System.err.println("request: " + request.urlString());
         return exeucteRequest(request);
     }
 
