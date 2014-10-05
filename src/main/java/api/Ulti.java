@@ -9,6 +9,15 @@ import dto.game.RecentGames;
 import dto.league.League;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
+import dto.staticdata.Item;
+import dto.staticdata.ItemList;
+import dto.staticdata.Mastery;
+import dto.staticdata.MasteryList;
+import dto.staticdata.Realm;
+import dto.staticdata.Rune;
+import dto.staticdata.RuneList;
+import dto.staticdata.SummonerSpell;
+import dto.staticdata.SummonerSpellList;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
 import dto.status.Shard;
@@ -37,15 +46,14 @@ public class Ulti {
     private static final Map<String, String> versions = new HashMap<String, String>();
     static {
         versions.put("summoner", "v1.4");
-        versions.put("team", "v2.3");
+        versions.put("team", "v2.3"); // Out-of-date
         versions.put("champion", "v1.2");
         versions.put("game", "v1.3");
         versions.put("league", "v2.5");
-        versions.put("static", "v1.2");
+        versions.put("static-data", "v1.2");
         versions.put("match", "v2.2");
         versions.put("matchhistory", "v2.2");
         versions.put("stats", "v1.3");
-
         versions.put("lol-status", "v1.0");
     }
 
@@ -538,5 +546,165 @@ public class Ulti {
         Reader json = api.statusQuery("shards/" + region);
 
         return gson.fromJson(json, ShardStatus.class);
+    }
+
+    /**
+     * Queries the static api for a list of champions in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  a {@link dto.staticdata.ChampionList}
+     */
+    public dto.staticdata.ChampionList getStaticChampionList() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/champion");
+
+        return gson.fromJson(json, dto.staticdata.ChampionList.class);
+    }
+
+    /**
+     * Queries the static api for a specific champion in the game by {@code championId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   championId the id of the champion to query
+     * @return  a {@link dto.staticdata.Champion} representing the champion
+     */
+    public dto.staticdata.Champion getStaticChampion(int championId) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/champion/" + championId);
+
+        return gson.fromJson(json, dto.staticdata.Champion.class);
+    }
+
+    /**
+     * Queries the static api for a list of all the items in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  an {@link dto.staticdata.ItemList}
+     */
+    public ItemList getStaticItemList() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/item");
+
+        return gson.fromJson(json, ItemList.class);
+    }
+
+    /**
+     * Queries the static api for a specific item in the game by {@code itemId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   itemId id of the item to query
+     * @return  an {@link dto.staticdata.Item} representing the item
+     */
+    public Item getStaticItem(int itemId) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/item/" + itemId);
+
+        return gson.fromJson(json, Item.class);
+    }
+
+    /**
+     * Queries the static api for a list of all the masteries in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  a {@link dto.staticdata.MasteryList}
+     */
+    public MasteryList getStaticMasteryList() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/mastery");
+
+        return gson.fromJson(json, MasteryList.class);
+    }
+
+    /**
+     * Queries the static api for a specific mastery in the game by {@code masteryId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   masteryId id of the mastery to query
+     * @return  a {@link dto.staticdata.Mastery} representing the mastery
+     */
+    public Mastery getStaticMastery(int masteryId) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/mastery/" + masteryId);
+
+        return gson.fromJson(json, Mastery.class);
+    }
+
+    /**
+     * Queries the static api for realm information
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  a {@link dto.staticdata.Realm} object representing the details of the realm
+     */
+    public Realm getStaticRealm() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/realm");
+
+        return gson.fromJson(json, Realm.class);
+    }
+
+    /**
+     * Queries the static api for a list of all the runes in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  a {@link dto.staticdata.RuneList}
+     */
+    public RuneList getStaticRuneList() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/rune");
+
+        return gson.fromJson(json, RuneList.class);
+    }
+
+    /**
+     * Queries the static api for a specific rune in the game by {@code runeId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   runeId id of the rune to query
+     * @return  a {@link dto.staticdata.Rune} representing the rune
+     */
+    public Rune getStaticRune(int runeId) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/rune/" + runeId);
+
+        return gson.fromJson(json, Rune.class);
+    }
+
+    /**
+     * Queries the static api for a list of all the summoner spells in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @return  a {@link dto.staticdata.SummonerSpellList}
+     */
+    public SummonerSpellList getStaticSummonerSpellList() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell");
+
+        return gson.fromJson(json, SummonerSpellList.class);
+    }
+
+    /**
+     * Queries the static api for a specific summoner spell in the game by {@code summonerSpellId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   summonerSpellId id of the summoner spell to query
+     * @return  a {@link dto.staticdata.SummonerSpell} representing the summoner spell
+     */
+    public SummonerSpell getStaticSummonerSpell(int summonerSpellId) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell/" + summonerSpellId);
+
+        return gson.fromJson(json, SummonerSpell.class);
+    }
+
+    /**
+     * Queries the static api for all versions of the data
+     *
+     * @return  a {@link java.util.List} of {@link java.lang.String} containing each version of the static data backend
+     */
+    public List<String> getStaticVersions() {
+        Reader json = api.staticQuery(versions.get("static-data") + "/versions");
+        Type type = new TypeToken<List<String>>() {}.getType();
+
+        return gson.fromJson(json, type);
     }
 }

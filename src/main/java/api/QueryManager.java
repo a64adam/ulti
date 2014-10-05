@@ -86,6 +86,7 @@ class QueryManager {
                 .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey)
                 .build();
 
+        System.err.println("request: " + request.urlString());
         return exeucteRequest(request);
     }
 

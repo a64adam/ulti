@@ -7,6 +7,15 @@ import dto.game.RecentGames;
 import dto.league.League;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
+import dto.staticdata.Item;
+import dto.staticdata.ItemList;
+import dto.staticdata.Mastery;
+import dto.staticdata.MasteryList;
+import dto.staticdata.Realm;
+import dto.staticdata.Rune;
+import dto.staticdata.RuneList;
+import dto.staticdata.SummonerSpell;
+import dto.staticdata.SummonerSpellList;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
 import dto.status.Shard;
@@ -19,6 +28,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class UltiTest {
@@ -249,5 +259,138 @@ public class UltiTest {
     public void testGetServerStatusByRegion() {
         ShardStatus ss = ulti.getServerStatus(Region.NA);
         Assert.assertNotNull(ss);
+    }
+
+    /**
+     * @see api.Ulti#getStaticChampionList()
+     */
+    @Test
+    public void testGetStaticChampionList() {
+        dto.staticdata.ChampionList cl = ulti.getStaticChampionList();
+        Assert.assertNotNull(cl);
+    }
+
+    /**
+     * @see Ulti#getStaticChampion(int)
+     */
+    @Test
+    public void testGetStaticChampion() {
+        dto.staticdata.ChampionList cl = ulti.getStaticChampionList();
+        Iterator<dto.staticdata.Champion> iter = cl.getData().values().iterator();
+
+        while (iter.hasNext()) {
+            dto.staticdata.Champion c = iter.next();
+            Assert.assertNotNull(ulti.getStaticChampion(c.getId()));
+        }
+    }
+
+    /**
+     * @see api.Ulti#getStaticItemList()
+     */
+    @Test
+    public void testGetStaticItemList() {
+        ItemList il = ulti.getStaticItemList();
+        Assert.assertNotNull(il);
+    }
+
+    /**
+     * @see Ulti#getStaticItem(int)
+     */
+    @Test
+    public void testGetStaticItem() {
+        ItemList il = ulti.getStaticItemList();
+        Iterator<Item> iter = il.getData().values().iterator();
+
+        while (iter.hasNext()) {
+            Item item = iter.next();
+            Assert.assertNotNull(ulti.getStaticItem(item.getId()));
+        }
+    }
+
+    /**
+     * @see api.Ulti#getStaticMasteryList()
+     */
+    @Test
+    public void testGetStaticMasteryList() {
+        MasteryList ml = ulti.getStaticMasteryList();
+        Assert.assertNotNull(ml);
+    }
+
+    /**
+     * @see Ulti#getStaticMastery(int)
+     */
+    @Test
+    public void testGetStaticMastery() {
+        MasteryList ml = ulti.getStaticMasteryList();
+        Iterator<Mastery> iter = ml.getData().values().iterator();
+
+        while (iter.hasNext()) {
+            Mastery m = iter.next();
+            Assert.assertNotNull(ulti.getStaticMastery(m.getId()));
+        }
+    }
+
+    /**
+     * @see api.Ulti#getStaticRealm()
+     */
+    @Test
+    public void testGetStaticRealm() {
+        Realm r = ulti.getStaticRealm();
+        Assert.assertNotNull(r);
+    }
+
+    /**
+     * @see api.Ulti#getStaticRuneList()
+     */
+    @Test
+    public void testGetStaticRuneList() {
+        RuneList rl = ulti.getStaticRuneList();
+        Assert.assertNotNull(rl);
+    }
+
+    /**
+     * @see Ulti#getStaticRune(int)
+     */
+    @Test
+    public void testGetStaticRune() {
+        RuneList rl = ulti.getStaticRuneList();
+        Iterator<Rune> iter = rl.getData().values().iterator();
+
+        while (iter.hasNext()) {
+            Rune r = iter.next();
+            Assert.assertNotNull(ulti.getStaticRune(r.getId()));
+        }
+    }
+
+    /**
+     * @see api.Ulti#getStaticSummonerSpellList()
+     */
+    @Test
+    public void testGetStaticSummonerSpellList() {
+        SummonerSpellList ssl = ulti.getStaticSummonerSpellList();
+        Assert.assertNotNull(ssl);
+    }
+
+    /**
+     * @see Ulti#getStaticSummonerSpell(int)
+     */
+    @Test
+    public void testGetStaticSummonerSpell() {
+        SummonerSpellList ssl = ulti.getStaticSummonerSpellList();
+        Iterator<SummonerSpell> iter = ssl.getData().values().iterator();
+
+        while (iter.hasNext()) {
+            SummonerSpell ss = iter.next();
+            Assert.assertNotNull(ss.getId());
+        }
+    }
+
+    /**
+     * @see api.Ulti#getStaticVersions()
+     */
+    @Test
+    public void testGetStaticVersions() {
+        List<String> v = ulti.getStaticVersions();
+        Assert.assertNotNull(v);
     }
 }
