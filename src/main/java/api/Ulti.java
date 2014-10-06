@@ -47,7 +47,7 @@ public class Ulti {
     private static final Map<String, String> versions = new HashMap<String, String>();
     static {
         versions.put("summoner", "v1.4");
-        versions.put("team", "v2.3"); // Out-of-date
+        versions.put("team", "v2.4");
         versions.put("champion", "v1.2");
         versions.put("game", "v1.3");
         versions.put("league", "v2.5");
@@ -275,7 +275,7 @@ public class Ulti {
      *          summoner is part of, with the key being the summoner ID as a {@link String}
      */
     public Map<String, List<Team>> getTeamBySummonerId(Long... summonerIds) {
-        if (!passLengthConstraint(summonerIds, 40)) {
+        if (!passLengthConstraint(summonerIds, 10)) {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
@@ -304,7 +304,7 @@ public class Ulti {
      *          team ID provided.
      */
     public Map<String, Team> getTeamById(String... teamIds) {
-        if (!passLengthConstraint(teamIds, 40)) {
+        if (!passLengthConstraint(teamIds, 10)) {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
