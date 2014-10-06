@@ -77,8 +77,8 @@ class QueryManager {
 
     Reader query(String path, Map<String, String> params) {
         // Obey the rate limit
-        shortRateLimiter.acquire();
         longRateLimiter.acquire();
+        shortRateLimiter.acquire();
 
         String sParams = "";
         if (params != null && !params.isEmpty()) {
