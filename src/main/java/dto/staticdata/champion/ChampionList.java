@@ -1,4 +1,6 @@
-package dto.staticdata;
+package dto.staticdata.champion;
+
+import dto.staticdata.champion.Champion;
 
 import java.util.Map;
 

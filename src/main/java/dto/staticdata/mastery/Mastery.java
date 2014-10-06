@@ -1,4 +1,6 @@
-package dto.staticdata;
+package dto.staticdata.mastery;
+
+import dto.staticdata.Image;
 
 import java.util.List;
 

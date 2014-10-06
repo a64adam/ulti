@@ -1,9 +1,14 @@
-package dto.staticdata;
+package dto.staticdata.item;
+
+import dto.staticdata.Gold;
+import dto.staticdata.Image;
+import dto.staticdata.MetaData;
+import dto.staticdata.BasicDataStats;
 
 import java.util.List;
 import java.util.Map;
 
-public class Rune {
+public class Item {
 
     private String colloq;
     private boolean consumeOnFull;
@@ -61,12 +66,12 @@ public class Rune {
         return group;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public boolean isHideFromAll() {
         return hideFromAll;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Image getImage() {
@@ -77,12 +82,12 @@ public class Rune {
         return inStore;
     }
 
-    public Map<String, Boolean> getMaps() {
-        return maps;
-    }
-
     public List<String> getInto() {
         return into;
+    }
+
+    public Map<String, Boolean> getMaps() {
+        return maps;
     }
 
     public String getName() {
@@ -93,12 +98,12 @@ public class Rune {
         return plaintext;
     }
 
-    public MetaData getRune() {
-        return rune;
-    }
-
     public String getRequiredChampion() {
         return requiredChampion;
+    }
+
+    public MetaData getRune() {
+        return rune;
     }
 
     public String getSanitizedDescription() {

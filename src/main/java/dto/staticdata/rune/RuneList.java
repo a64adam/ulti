@@ -1,4 +1,6 @@
-package dto.staticdata;
+package dto.staticdata.rune;
+
+import dto.staticdata.BasicData;
 
 import java.util.Map;
 

@@ -1,34 +1,36 @@
-package dto.staticdata;
+package dto.staticdata.summonerspell;
+
+import dto.staticdata.Image;
+import dto.staticdata.LevelTip;
+import dto.staticdata.SpellVars;
 
 import java.util.List;
 
-public class ChampionSpell {
+public class SummonerSpell {
 
-    private List<Image> altimages;
     private List<Double> cooldown;
     private String cooldownBurn;
     private List<Integer> cost;
     private String costBurn;
     private String costType;
     private String description;
-    private List<Object> effect;
+    private List<List<Double>> effect;
     private List<String> effectBurn;
+    private int id;
     private Image image;
     private String key;
     private LevelTip leveltip;
     private int maxrank;
+    private List<String> modes;
     private String name;
     private Object range;
     private String rangeBurn;
     private String resource;
     private String sanitizedDescription;
     private String sanitizedTooltip;
+    private int summonerLevel;
     private String tooltip;
     private List<SpellVars> vars;
-
-    public List<Image> getAltimages() {
-        return altimages;
-    }
 
     public List<Double> getCooldown() {
         return cooldown;
@@ -54,12 +56,16 @@ public class ChampionSpell {
         return description;
     }
 
-    public List<Object> getEffect() {
+    public List<List<Double>> getEffect() {
         return effect;
     }
 
     public List<String> getEffectBurn() {
         return effectBurn;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Image getImage() {
@@ -78,10 +84,18 @@ public class ChampionSpell {
         return maxrank;
     }
 
+    public List<String> getModes() {
+        return modes;
+    }
+
     public String getName() {
         return name;
     }
 
+    /**
+     * @return  either a {@link java.util.List} of {@link java.lang.Integer}, or a {@link java.lang.String} containing
+     *          'self' for spells that target one's own champion
+     */
     public Object getRange() {
         return range;
     }
@@ -100,6 +114,10 @@ public class ChampionSpell {
 
     public String getSanitizedTooltip() {
         return sanitizedTooltip;
+    }
+
+    public int getSummonerLevel() {
+        return summonerLevel;
     }
 
     public String getTooltip() {

@@ -8,15 +8,15 @@ import dto.league.League;
 import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
-import dto.staticdata.Item;
-import dto.staticdata.ItemList;
-import dto.staticdata.Mastery;
-import dto.staticdata.MasteryList;
-import dto.staticdata.Realm;
-import dto.staticdata.Rune;
-import dto.staticdata.RuneList;
-import dto.staticdata.SummonerSpell;
-import dto.staticdata.SummonerSpellList;
+import dto.staticdata.item.Item;
+import dto.staticdata.item.ItemList;
+import dto.staticdata.mastery.Mastery;
+import dto.staticdata.mastery.MasteryList;
+import dto.staticdata.realm.Realm;
+import dto.staticdata.rune.Rune;
+import dto.staticdata.rune.RuneList;
+import dto.staticdata.summonerspell.SummonerSpell;
+import dto.staticdata.summonerspell.SummonerSpellList;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
 import dto.status.Shard;
@@ -268,7 +268,7 @@ public class UltiTest {
      */
     @Test
     public void testGetStaticChampionList() {
-        dto.staticdata.ChampionList cl = ulti.getStaticChampionList();
+        dto.staticdata.champion.ChampionList cl = ulti.getStaticChampionList();
         Assert.assertNotNull(cl);
     }
 
@@ -277,11 +277,11 @@ public class UltiTest {
      */
     @Test
     public void testGetStaticChampion() {
-        dto.staticdata.ChampionList cl = ulti.getStaticChampionList();
-        Iterator<dto.staticdata.Champion> iter = cl.getData().values().iterator();
+        dto.staticdata.champion.ChampionList cl = ulti.getStaticChampionList();
+        Iterator<dto.staticdata.champion.Champion> iter = cl.getData().values().iterator();
 
         while (iter.hasNext()) {
-            dto.staticdata.Champion c = iter.next();
+            dto.staticdata.champion.Champion c = iter.next();
             Assert.assertNotNull(ulti.getStaticChampion(c.getId()));
         }
     }

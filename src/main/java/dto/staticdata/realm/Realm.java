@@ -1,4 +1,4 @@
-package dto.staticdata;
+package dto.staticdata.realm;
 
 import java.util.Map;
 

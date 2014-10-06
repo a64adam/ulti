@@ -1,4 +1,11 @@
-package dto.staticdata;
+package dto.staticdata.champion;
+
+import dto.staticdata.Image;
+import dto.staticdata.Info;
+import dto.staticdata.Passive;
+import dto.staticdata.Recommended;
+import dto.staticdata.Skin;
+import dto.staticdata.Stats;
 
 import java.util.List;
 

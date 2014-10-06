@@ -1,4 +1,4 @@
-package dto.staticdata;
+package dto.staticdata.summonerspell;
 
 import java.util.Map;
 

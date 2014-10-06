@@ -1,4 +1,4 @@
-package dto.staticdata;
+package dto.staticdata.item;
 
 import java.util.List;
 

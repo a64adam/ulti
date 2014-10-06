@@ -1,4 +1,7 @@
-package dto.staticdata;
+package dto.staticdata.item;
+
+import dto.staticdata.BasicData;
+import dto.staticdata.Group;
 
 import java.util.List;
 import java.util.Map;

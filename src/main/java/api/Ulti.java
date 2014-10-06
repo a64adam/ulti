@@ -10,15 +10,15 @@ import dto.league.League;
 import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
-import dto.staticdata.Item;
-import dto.staticdata.ItemList;
-import dto.staticdata.Mastery;
-import dto.staticdata.MasteryList;
-import dto.staticdata.Realm;
-import dto.staticdata.Rune;
-import dto.staticdata.RuneList;
-import dto.staticdata.SummonerSpell;
-import dto.staticdata.SummonerSpellList;
+import dto.staticdata.item.Item;
+import dto.staticdata.item.ItemList;
+import dto.staticdata.mastery.Mastery;
+import dto.staticdata.mastery.MasteryList;
+import dto.staticdata.realm.Realm;
+import dto.staticdata.rune.Rune;
+import dto.staticdata.rune.RuneList;
+import dto.staticdata.summonerspell.SummonerSpell;
+import dto.staticdata.summonerspell.SummonerSpellList;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
 import dto.status.Shard;
@@ -558,12 +558,12 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  a {@link dto.staticdata.ChampionList}
+     * @return  a {@link dto.staticdata.champion.ChampionList}
      */
-    public dto.staticdata.ChampionList getStaticChampionList() {
+    public dto.staticdata.champion.ChampionList getStaticChampionList() {
         Reader json = api.staticQuery(versions.get("static-data") + "/champion");
 
-        return gson.fromJson(json, dto.staticdata.ChampionList.class);
+        return gson.fromJson(json, dto.staticdata.champion.ChampionList.class);
     }
 
     /**
@@ -572,12 +572,12 @@ public class Ulti {
      * Requests to this API will not be counted in your Rate Limit.
      *
      * @param   championId the id of the champion to query
-     * @return  a {@link dto.staticdata.Champion} representing the champion
+     * @return  a {@link dto.staticdata.champion.Champion} representing the champion
      */
-    public dto.staticdata.Champion getStaticChampion(int championId) {
+    public dto.staticdata.champion.Champion getStaticChampion(int championId) {
         Reader json = api.staticQuery(versions.get("static-data") + "/champion/" + championId);
 
-        return gson.fromJson(json, dto.staticdata.Champion.class);
+        return gson.fromJson(json, dto.staticdata.champion.Champion.class);
     }
 
     /**
@@ -585,7 +585,7 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  an {@link dto.staticdata.ItemList}
+     * @return  an {@link dto.staticdata.item.ItemList}
      */
     public ItemList getStaticItemList() {
         Reader json = api.staticQuery(versions.get("static-data") + "/item");
@@ -599,7 +599,7 @@ public class Ulti {
      * Requests to this API will not be counted in your Rate Limit.
      *
      * @param   itemId id of the item to query
-     * @return  an {@link dto.staticdata.Item} representing the item
+     * @return  an {@link dto.staticdata.item.Item} representing the item
      */
     public Item getStaticItem(int itemId) {
         Reader json = api.staticQuery(versions.get("static-data") + "/item/" + itemId);
@@ -612,7 +612,7 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  a {@link dto.staticdata.MasteryList}
+     * @return  a {@link dto.staticdata.mastery.MasteryList}
      */
     public MasteryList getStaticMasteryList() {
         Reader json = api.staticQuery(versions.get("static-data") + "/mastery");
@@ -626,7 +626,7 @@ public class Ulti {
      * Requests to this API will not be counted in your Rate Limit.
      *
      * @param   masteryId id of the mastery to query
-     * @return  a {@link dto.staticdata.Mastery} representing the mastery
+     * @return  a {@link dto.staticdata.mastery.Mastery} representing the mastery
      */
     public Mastery getStaticMastery(int masteryId) {
         Reader json = api.staticQuery(versions.get("static-data") + "/mastery/" + masteryId);
@@ -639,7 +639,7 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  a {@link dto.staticdata.Realm} object representing the details of the realm
+     * @return  a {@link dto.staticdata.realm.Realm} object representing the details of the realm
      */
     public Realm getStaticRealm() {
         Reader json = api.staticQuery(versions.get("static-data") + "/realm");
@@ -652,7 +652,7 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  a {@link dto.staticdata.RuneList}
+     * @return  a {@link dto.staticdata.rune.RuneList}
      */
     public RuneList getStaticRuneList() {
         Reader json = api.staticQuery(versions.get("static-data") + "/rune");
@@ -666,7 +666,7 @@ public class Ulti {
      * Requests to this API will not be counted in your Rate Limit.
      *
      * @param   runeId id of the rune to query
-     * @return  a {@link dto.staticdata.Rune} representing the rune
+     * @return  a {@link dto.staticdata.rune.Rune} representing the rune
      */
     public Rune getStaticRune(int runeId) {
         Reader json = api.staticQuery(versions.get("static-data") + "/rune/" + runeId);
@@ -679,7 +679,7 @@ public class Ulti {
      *
      * Requests to this API will not be counted in your Rate Limit.
      *
-     * @return  a {@link dto.staticdata.SummonerSpellList}
+     * @return  a {@link dto.staticdata.summonerspell.SummonerSpellList}
      */
     public SummonerSpellList getStaticSummonerSpellList() {
         Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell");
@@ -693,7 +693,7 @@ public class Ulti {
      * Requests to this API will not be counted in your Rate Limit.
      *
      * @param   summonerSpellId id of the summoner spell to query
-     * @return  a {@link dto.staticdata.SummonerSpell} representing the summoner spell
+     * @return  a {@link dto.staticdata.summonerspell.SummonerSpell} representing the summoner spell
      */
     public SummonerSpell getStaticSummonerSpell(int summonerSpellId) {
         Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell/" + summonerSpellId);
