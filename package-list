@@ -1,0 +1,13 @@
+api
+dto
+dto.champion
+dto.game
+dto.league
+dto.match
+dto.matchhistory
+dto.staticdata
+dto.stats
+dto.status
+dto.summoner
+dto.team
+dto.util
