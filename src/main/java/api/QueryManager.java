@@ -111,7 +111,7 @@ class QueryManager {
                 .url(endpoint + region + "/" + path + "?api_key=" + apiKey + sParams)
                 .build();
 
-        return exeucteRequest(request);
+        return executeRequest(request);
     }
 
     Reader staticQuery(String path) {
@@ -120,7 +120,7 @@ class QueryManager {
                 .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey)
                 .build();
 
-        return exeucteRequest(request);
+        return executeRequest(request);
     }
 
     Reader statusQuery(String path) {
@@ -128,10 +128,10 @@ class QueryManager {
                 .url("http://status.leagueoflegends.com/" + path)
                 .build();
 
-        return exeucteRequest(request);
+        return executeRequest(request);
     }
 
-    private Reader exeucteRequest(Request request) {
+    private Reader executeRequest(Request request) {
         // Get response
         Response response = null;
         try {
