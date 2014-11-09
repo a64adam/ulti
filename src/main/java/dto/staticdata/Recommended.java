@@ -24,7 +24,7 @@ package dto.staticdata;
 import java.util.List;
 
 public class Recommended {
-    private List<String> blocks;
+    private List<Block> blocks;
     private String champion;
     private String map;
     private String mode;
@@ -32,7 +32,7 @@ public class Recommended {
     private String title;
     private String type;
 
-    public List<String> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 

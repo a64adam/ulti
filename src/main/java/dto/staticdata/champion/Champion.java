@@ -32,7 +32,7 @@ import java.util.List;
 
 public class Champion {
 
-    private String allytips;
+    private List<String> allytips;
     private String blurb;
     private List<String> enemytips;
     private int id;
@@ -50,7 +50,7 @@ public class Champion {
     private List<String> tags;
     private String title;
 
-    public String getAllytips() {
+    public List<String> getAllytips() {
         return allytips;
     }
 

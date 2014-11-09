@@ -31,15 +31,20 @@ import dto.league.League;
 import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
+import dto.staticdata.champion.ChampionQueryParams;
 import dto.staticdata.item.Item;
 import dto.staticdata.item.ItemList;
+import dto.staticdata.item.ItemQueryParams;
 import dto.staticdata.mastery.Mastery;
 import dto.staticdata.mastery.MasteryList;
+import dto.staticdata.mastery.MasteryQueryParams;
 import dto.staticdata.realm.Realm;
 import dto.staticdata.rune.Rune;
 import dto.staticdata.rune.RuneList;
+import dto.staticdata.rune.RuneQueryParams;
 import dto.staticdata.summonerspell.SummonerSpell;
 import dto.staticdata.summonerspell.SummonerSpellList;
+import dto.staticdata.summonerspell.SummonerSpellQueryParams;
 import dto.stats.PlayerStatsSummaryList;
 import dto.stats.RankedStats;
 import dto.status.Shard;
@@ -99,7 +104,7 @@ public class Ulti {
      *
      * @param requestsPerSecond number of requests allowed per second
      */
-    public void setShortRateLimit(int requestsPerSecond) {
+    public void setShortRateLimit(double requestsPerSecond) {
         api.setShortRateLimit(requestsPerSecond);
     }
 
@@ -108,7 +113,7 @@ public class Ulti {
      *
      * @param requestsPerSecond number of requests allowed per second
      */
-    public void setLongRateLimit(int requestsPerSecond) {
+    public void setLongRateLimit(double requestsPerSecond) {
         api.setLongRateLimit(requestsPerSecond);
     }
 
@@ -127,7 +132,7 @@ public class Ulti {
      * @return  championList containing a list of {@link dto.champion.Champion}.
      */
     public ChampionList getChampions() {
-        Reader json = api.apiQuery(versions.get("champion") + "/champion");
+        Reader json = api.query(versions.get("champion") + "/champion");
 
         return gson.fromJson(json, ChampionList.class);
     }
@@ -140,7 +145,7 @@ public class Ulti {
      * @return  a {@link dto.champion.Champion} with the specified champion id
      */
     public Champion getChampionById(int championId) {
-        Reader json = api.apiQuery(versions.get("champion") + "/champion/" + championId);
+        Reader json = api.query(versions.get("champion") + "/champion/" + championId);
 
         return gson.fromJson(json, Champion.class);
     }
@@ -157,7 +162,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/by-name/" + prepare(championNames));
+        Reader json = api.query(versions.get("summoner") + "/summoner/by-name/" + prepare(championNames));
         Type type = new TypeToken<Map<String, Summoner>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -187,7 +192,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds));
+        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, Summoner>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -216,7 +221,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/masteries");
+        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/masteries");
         Type type = new TypeToken<Map<String, MasteryPages>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -241,7 +246,7 @@ public class Ulti {
      *          as the key
      */
     public Map<String, String> getSummonerNameById(Long... summonerIds) {
-        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/name");
+        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(summonerIds) + "/name");
         Type type = new TypeToken<Map<String, String>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -270,7 +275,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("summoner") + "/summoner/" + prepare(ids) + "/runes");
+        Reader json = api.query(versions.get("summoner") + "/summoner/" + prepare(ids) + "/runes");
         Type type = new TypeToken<Map<String, RunePages>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -300,7 +305,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("team") + "/team/by-summoner/" + prepare(summonerIds));
+        Reader json = api.query(versions.get("team") + "/team/by-summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, List<Team>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -329,7 +334,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("team") + "/team/" + prepare(teamIds, false));
+        Reader json = api.query(versions.get("team") + "/team/" + prepare(teamIds, false));
         Type type = new TypeToken<Map<String, Team>>() {
         }.getType();
 
@@ -358,7 +363,7 @@ public class Ulti {
      */
     @Deprecated
     public RecentGames getRecentGames(Long summonerId) {
-        Reader json = api.apiQuery(versions.get("game") + "/game/by-summoner/" + summonerId + "/recent");
+        Reader json = api.query(versions.get("game") + "/game/by-summoner/" + summonerId + "/recent");
 
         return gson.fromJson(json, RecentGames.class);
     }
@@ -375,7 +380,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds));
+        Reader json = api.query(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds));
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -404,7 +409,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds) + "/entry");
+        Reader json = api.query(versions.get("league") + "/league/by-summoner/" + prepare(summonerIds) + "/entry");
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -435,7 +440,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("league") + "/league/by-team/" + prepare(teamIds, false));
+        Reader json = api.query(versions.get("league") + "/league/by-team/" + prepare(teamIds, false));
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -466,7 +471,7 @@ public class Ulti {
             throw new UltiException(UltiException.Type.INVALID_PARAMETERS);
         }
 
-        Reader json = api.apiQuery(versions.get("league") + "/league/by-team/" + prepare(teamIds, false) + "/entry");
+        Reader json = api.query(versions.get("league") + "/league/by-team/" + prepare(teamIds, false) + "/entry");
         Type type = new TypeToken<Map<String, List<League>>>() {}.getType();
 
         return gson.fromJson(json, type);
@@ -496,7 +501,7 @@ public class Ulti {
         Map<String, String> params = new HashMap<String, String>();
         params.put("type", queueType.toString());
 
-        Reader json = api.apiQuery(versions.get("league") + "/league/challenger", params);
+        Reader json = api.query(versions.get("league") + "/league/challenger", params);
 
         return gson.fromJson(json, League.class);
     }
@@ -508,7 +513,7 @@ public class Ulti {
      * @return  a {@link dto.stats.RankedStats} object containing all the stats for this summoner in ranked play
      */
     public RankedStats getRankedStatsBySummonerId(Long summonerId) {
-        Reader json = api.apiQuery(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/ranked");
+        Reader json = api.query(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/ranked");
 
         return gson.fromJson(json, RankedStats.class);
     }
@@ -521,7 +526,7 @@ public class Ulti {
      *          this summoner
      */
     public PlayerStatsSummaryList getStatsSummaryBySummonerId(Long summonerId) {
-        Reader json = api.apiQuery(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/summary");
+        Reader json = api.query(versions.get("stats") + "/stats/by-summoner/" + summonerId + "/summary");
 
         return gson.fromJson(json, PlayerStatsSummaryList.class);
     }
@@ -533,7 +538,7 @@ public class Ulti {
      * @return  a {@link dto.match.MatchDetail} object containing detailed information for the given match
      */
     public MatchDetail getMatchById(Long matchId) {
-        Reader json = api.apiQuery(versions.get("match") + "/match/" + matchId);
+        Reader json = api.query(versions.get("match") + "/match/" + matchId);
 
         return gson.fromJson(json, MatchDetail.class);
     }
@@ -545,7 +550,7 @@ public class Ulti {
      * @return  a {@link dto.matchhistory.PlayerHistory} object containing all of the summoners match history
      */
     public PlayerHistory getMatchHistoryBySummonerId(Long summonerId) {
-        Reader json = api.apiQuery(versions.get("matchhistory") + "/matchhistory/" + summonerId);
+        Reader json = api.query(versions.get("matchhistory") + "/matchhistory/" + summonerId);
 
         return gson.fromJson(json, PlayerHistory.class);
     }
@@ -582,7 +587,21 @@ public class Ulti {
      * @return  a {@link dto.staticdata.champion.ChampionList}
      */
     public dto.staticdata.champion.ChampionList getStaticChampionList() {
-        Reader json = api.staticQuery(versions.get("static-data") + "/champion");
+        return getStaticChampionList(null);
+    }
+
+    /**
+     * Queries the static api for a list of champions in the game.
+     *
+     * @param   championQueryParams champion query parameters
+     * @return  a {@link dto.champion.ChampionList}
+     *
+     * @see     dto.staticdata.champion.ChampData
+     * @see     dto.staticdata.champion.ChampionQueryParams
+     */
+    public dto.staticdata.champion.ChampionList getStaticChampionList(ChampionQueryParams championQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/champion",
+                championQueryParams != null ? championQueryParams.getParams() : null);
 
         return gson.fromJson(json, dto.staticdata.champion.ChampionList.class);
     }
@@ -596,7 +615,22 @@ public class Ulti {
      * @return  a {@link dto.staticdata.champion.Champion} representing the champion
      */
     public dto.staticdata.champion.Champion getStaticChampion(int championId) {
-        Reader json = api.staticQuery(versions.get("static-data") + "/champion/" + championId);
+        return getStaticChampion(championId, null);
+    }
+
+    /**
+     * Queries the static api for a specific champion in the game by {@code championId}
+     *
+     * @param   championId the id of the champion to query
+     * @param   championQueryParams query parameters
+     * @return  a {@link dto.staticdata.champion.Champion} representing the champion
+     *
+     * @see     dto.staticdata.champion.ChampData
+     * @see     dto.staticdata.champion.ChampionQueryParams
+     */
+    public dto.staticdata.champion.Champion getStaticChampion(int championId, ChampionQueryParams championQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/champion/" + championId,
+                championQueryParams != null ? championQueryParams.getParams() : null);
 
         return gson.fromJson(json, dto.staticdata.champion.Champion.class);
     }
@@ -609,7 +643,23 @@ public class Ulti {
      * @return  an {@link dto.staticdata.item.ItemList}
      */
     public ItemList getStaticItemList() {
-        Reader json = api.staticQuery(versions.get("static-data") + "/item");
+        return getStaticItemList(null);
+    }
+
+    /**
+     * Queries the static api for a list of all the items in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   itemQueryParams item query parameters
+     * @return  an {@link dto.staticdata.item.ItemList}
+     *
+     * @see     dto.staticdata.item.ItemListData
+     * @see     dto.staticdata.item.ItemQueryParams
+     */
+    public ItemList getStaticItemList(ItemQueryParams itemQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/item",
+                itemQueryParams != null ? itemQueryParams.getParams() : null);
 
         return gson.fromJson(json, ItemList.class);
     }
@@ -623,7 +673,24 @@ public class Ulti {
      * @return  an {@link dto.staticdata.item.Item} representing the item
      */
     public Item getStaticItem(int itemId) {
-        Reader json = api.staticQuery(versions.get("static-data") + "/item/" + itemId);
+        return getStaticItem(itemId, null);
+    }
+
+    /**
+     * Queries the static api for a specific item in the game by {@code itemId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   itemId id of the item to query
+     * @param   itemQueryParams item query parameters
+     * @return  an {@link dto.staticdata.item.Item} representing the item
+     *
+     * @see     dto.staticdata.item.ItemListData
+     * @see     dto.staticdata.item.ItemQueryParams
+     */
+    public Item getStaticItem(int itemId, ItemQueryParams itemQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/item/" + itemId,
+                itemQueryParams != null ? itemQueryParams.getParams() : null);
 
         return gson.fromJson(json, Item.class);
     }
@@ -636,7 +703,23 @@ public class Ulti {
      * @return  a {@link dto.staticdata.mastery.MasteryList}
      */
     public MasteryList getStaticMasteryList() {
-        Reader json = api.staticQuery(versions.get("static-data") + "/mastery");
+        return getStaticMasteryList(null);
+    }
+
+    /**
+     * Queries the static api for a list of all the masteries in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   masteryQueryParams mastery query parameters
+     * @return  a {@link dto.staticdata.mastery.MasteryList}
+     *
+     * @see     dto.staticdata.mastery.MasteryListData
+     * @see     dto.staticdata.mastery.MasteryQueryParams
+     */
+    public MasteryList getStaticMasteryList(MasteryQueryParams masteryQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/mastery",
+                masteryQueryParams != null ? masteryQueryParams.getParams() : null);
 
         return gson.fromJson(json, MasteryList.class);
     }
@@ -650,7 +733,24 @@ public class Ulti {
      * @return  a {@link dto.staticdata.mastery.Mastery} representing the mastery
      */
     public Mastery getStaticMastery(int masteryId) {
-        Reader json = api.staticQuery(versions.get("static-data") + "/mastery/" + masteryId);
+        return getStaticMastery(masteryId, null);
+    }
+
+    /**
+     * Queries the static api for a specific mastery in the game by {@code masteryId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   masteryId id of the mastery to query
+     * @param   masteryQueryParams mastery query parameters
+     * @return  a {@link dto.staticdata.mastery.Mastery} representing the mastery
+     *
+     * @see     dto.staticdata.mastery.MasteryListData
+     * @see     dto.staticdata.mastery.MasteryQueryParams
+     */
+    public Mastery getStaticMastery(int masteryId, MasteryQueryParams masteryQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/mastery/" + masteryId,
+                masteryQueryParams != null ? masteryQueryParams.getParams() : null);
 
         return gson.fromJson(json, Mastery.class);
     }
@@ -676,7 +776,23 @@ public class Ulti {
      * @return  a {@link dto.staticdata.rune.RuneList}
      */
     public RuneList getStaticRuneList() {
-        Reader json = api.staticQuery(versions.get("static-data") + "/rune");
+        return getStaticRuneList(null);
+    }
+
+    /**
+     * Queries the static api for a list of all the runes in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   runeQueryParams rune query parameters
+     * @return  a {@link dto.staticdata.rune.RuneList}
+     *
+     * @see     dto.staticdata.rune.RuneListData
+     * @see     dto.staticdata.rune.RuneQueryParams
+     */
+    public RuneList getStaticRuneList(RuneQueryParams runeQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/rune",
+                runeQueryParams != null ? runeQueryParams.getParams() : null);
 
         return gson.fromJson(json, RuneList.class);
     }
@@ -690,7 +806,24 @@ public class Ulti {
      * @return  a {@link dto.staticdata.rune.Rune} representing the rune
      */
     public Rune getStaticRune(int runeId) {
-        Reader json = api.staticQuery(versions.get("static-data") + "/rune/" + runeId);
+        return getStaticRune(runeId, null);
+    }
+
+    /**
+     * Queries the static api for a specific rune in the game by {@code runeId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   runeId id of the rune to query
+     * @param   runeQueryParams rune query parameters
+     * @return  a {@link dto.staticdata.rune.Rune} representing the rune
+     *
+     * @see     dto.staticdata.rune.RuneListData
+     * @see     dto.staticdata.rune.RuneQueryParams
+     */
+    public Rune getStaticRune(int runeId, RuneQueryParams runeQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/rune/" + runeId,
+                runeQueryParams != null ? runeQueryParams.getParams() : null);
 
         return gson.fromJson(json, Rune.class);
     }
@@ -703,7 +836,23 @@ public class Ulti {
      * @return  a {@link dto.staticdata.summonerspell.SummonerSpellList}
      */
     public SummonerSpellList getStaticSummonerSpellList() {
-        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell");
+        return getStaticSummonerSpellList(null);
+    }
+
+    /**
+     * Queries the static api for a list of all the summoner spells in the game.
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   summonerSpellQueryParams summoner spell query parameters
+     * @return  a {@link dto.staticdata.summonerspell.SummonerSpellList}
+     *
+     * @see     dto.staticdata.summonerspell.SpellData
+     * @see     dto.staticdata.summonerspell.SummonerSpellQueryParams
+     */
+    public SummonerSpellList getStaticSummonerSpellList(SummonerSpellQueryParams summonerSpellQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell",
+                summonerSpellQueryParams != null ? summonerSpellQueryParams.getParams() : null);
 
         return gson.fromJson(json, SummonerSpellList.class);
     }
@@ -717,7 +866,24 @@ public class Ulti {
      * @return  a {@link dto.staticdata.summonerspell.SummonerSpell} representing the summoner spell
      */
     public SummonerSpell getStaticSummonerSpell(int summonerSpellId) {
-        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell/" + summonerSpellId);
+        return getStaticSummonerSpell(summonerSpellId, null);
+    }
+
+    /**
+     * Queries the static api for a specific summoner spell in the game by {@code summonerSpellId}
+     *
+     * Requests to this API will not be counted in your Rate Limit.
+     *
+     * @param   summonerSpellId id of the summoner spell to query
+     * @param   summonerSpellQueryParams summoner spell query parameters
+     * @return  a {@link dto.staticdata.summonerspell.SummonerSpell} representing the summoner spell
+     *
+     * @see     dto.staticdata.summonerspell.SpellData
+     * @see     dto.staticdata.summonerspell.SummonerSpellQueryParams
+     */
+    public SummonerSpell getStaticSummonerSpell(int summonerSpellId, SummonerSpellQueryParams summonerSpellQueryParams) {
+        Reader json = api.staticQuery(versions.get("static-data") + "/summoner-spell/" + summonerSpellId,
+                summonerSpellQueryParams != null ? summonerSpellQueryParams.getParams() : null);
 
         return gson.fromJson(json, SummonerSpell.class);
     }

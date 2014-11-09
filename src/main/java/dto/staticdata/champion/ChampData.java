@@ -21,33 +21,31 @@
 
 package dto.staticdata.champion;
 
-import java.util.Map;
+public enum ChampData {
+    ALL("all"),
+    ALLYTIPS("allytips"),
+    ALTIMAGES("altimages"),
+    BLURB("blurb"),
+    ENEMYTIPS("enemytips"),
+    IMAGE("image"),
+    INFO("info"),
+    LORE("lore"),
+    PARTYPE("partype"),
+    PASSIVE("passive"),
+    RECOMMENDED("recommended"),
+    SKINS("skins"),
+    SPELLS("spells"),
+    STATS("stats"),
+    TAGS("tags");
 
-public class ChampionList {
+    private final String value;
 
-    private Map<String, Champion> data;
-    private String format;
-    private Map<String, String> keys;
-    private String type;
-    private String version;
-
-    public Map<String, Champion> getData() {
-        return data;
+    ChampData(String value) {
+        this.value = value;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public Map<String, String> getKeys() {
-        return keys;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getVersion() {
-        return version;
+    @Override
+    public String toString() {
+        return name().toLowerCase();
     }
 }

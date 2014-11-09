@@ -88,39 +88,30 @@ class QueryManager {
         region = Region.NA;
     }
 
-    Reader apiQuery(String path) {
+    Reader query(String path) {
         return query(path, null);
     }
 
-    Reader apiQuery(String path, Map<String, String> params) {
-        return query(path, params);
-    }
-
     Reader query(String path, Map<String, String> params) {
-        // Obey the rate limit
-        longRateLimiter.acquire();
-        shortRateLimiter.acquire();
-
-        String sParams = "";
-        if (params != null && !params.isEmpty()) {
-            sParams = "&" + QueryUtils.toStringList(params, "&");
-        }
-
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + region + "/" + path + "?api_key=" + apiKey + sParams)
+                .url(endpoint + region + "/" + path + "?api_key=" + apiKey + getParams(params))
                 .build();
 
-        return executeRequest(request);
+        return executeRequest(request, true);
     }
 
     Reader staticQuery(String path) {
+        return staticQuery(path, null);
+    }
+
+    Reader staticQuery(String path, Map<String, String> params) {
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey)
+                .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey + getParams(params))
                 .build();
 
-        return executeRequest(request);
+        return executeRequest(request, false);
     }
 
     Reader statusQuery(String path) {
@@ -128,16 +119,32 @@ class QueryManager {
                 .url("http://status.leagueoflegends.com/" + path)
                 .build();
 
-        return executeRequest(request);
+        return executeRequest(request, false);
     }
 
-    private Reader executeRequest(Request request) {
+    private String getParams(Map<String, String> params) {
+        String sParams = "";
+        if (params != null && !params.isEmpty()) {
+            sParams = "&" + QueryUtils.toStringList(params, "&");
+        }
+        return sParams;
+    }
+
+    private Reader executeRequest(Request request, boolean limit) {
         // Get response
         Response response = null;
         try {
+
+            if (limit) {
+                // Obey the rate limit
+                longRateLimiter.acquire();
+                shortRateLimiter.acquire();
+            }
+
             response = client.newCall(request).execute();
         } catch (IOException e) {
             // Handle error
+            throw new UltiException(UltiException.Type.UNKNOWN);
         }
 
         // Handle any errors
@@ -171,11 +178,11 @@ class QueryManager {
         this.apiKey = apiKey;
     }
 
-    void setShortRateLimit(int qps) {
+    void setShortRateLimit(double qps) {
         shortRateLimiter.setRate(qps);
     }
 
-    void setLongRateLimit(int qps) {
+    void setLongRateLimit(double qps) {
         longRateLimiter.setRate(qps);
     }
 

@@ -29,6 +29,8 @@ import dto.league.League;
 import dto.league.QueueType;
 import dto.match.MatchDetail;
 import dto.matchhistory.PlayerHistory;
+import dto.staticdata.champion.ChampData;
+import dto.staticdata.champion.ChampionQueryParams;
 import dto.staticdata.item.Item;
 import dto.staticdata.item.ItemList;
 import dto.staticdata.mastery.Mastery;
@@ -53,7 +55,7 @@ import org.junit.Test;
 import java.util.Iterator;
 import java.util.List;
 
-public class UltiTest {
+public class APITests {
 
     private static Ulti ulti;
     private static long summonerId;
@@ -61,7 +63,8 @@ public class UltiTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        ulti = new Ulti("YOUR_API_KEY");
+        ulti = new Ulti("db012a8a-e9c0-413d-9c97-9dffe07a91c5");
+        ulti.setShortRateLimit(0.9);
         summonerId = 23287684l;
         teamId = "TEAM-fe3c3290-28e4-11e4-91d2-782bcb4d0bb2";
     }
@@ -282,138 +285,5 @@ public class UltiTest {
     public void testGetServerStatusByRegion() {
         ShardStatus ss = ulti.getServerStatus(Region.NA);
         Assert.assertNotNull(ss);
-    }
-
-    /**
-     * @see api.Ulti#getStaticChampionList()
-     */
-    @Test
-    public void testGetStaticChampionList() {
-        dto.staticdata.champion.ChampionList cl = ulti.getStaticChampionList();
-        Assert.assertNotNull(cl);
-    }
-
-    /**
-     * @see Ulti#getStaticChampion(int)
-     */
-    @Test
-    public void testGetStaticChampion() {
-        dto.staticdata.champion.ChampionList cl = ulti.getStaticChampionList();
-        Iterator<dto.staticdata.champion.Champion> iter = cl.getData().values().iterator();
-
-        while (iter.hasNext()) {
-            dto.staticdata.champion.Champion c = iter.next();
-            Assert.assertNotNull(ulti.getStaticChampion(c.getId()));
-        }
-    }
-
-    /**
-     * @see api.Ulti#getStaticItemList()
-     */
-    @Test
-    public void testGetStaticItemList() {
-        ItemList il = ulti.getStaticItemList();
-        Assert.assertNotNull(il);
-    }
-
-    /**
-     * @see Ulti#getStaticItem(int)
-     */
-    @Test
-    public void testGetStaticItem() {
-        ItemList il = ulti.getStaticItemList();
-        Iterator<Item> iter = il.getData().values().iterator();
-
-        while (iter.hasNext()) {
-            Item item = iter.next();
-            Assert.assertNotNull(ulti.getStaticItem(item.getId()));
-        }
-    }
-
-    /**
-     * @see api.Ulti#getStaticMasteryList()
-     */
-    @Test
-    public void testGetStaticMasteryList() {
-        MasteryList ml = ulti.getStaticMasteryList();
-        Assert.assertNotNull(ml);
-    }
-
-    /**
-     * @see Ulti#getStaticMastery(int)
-     */
-    @Test
-    public void testGetStaticMastery() {
-        MasteryList ml = ulti.getStaticMasteryList();
-        Iterator<Mastery> iter = ml.getData().values().iterator();
-
-        while (iter.hasNext()) {
-            Mastery m = iter.next();
-            Assert.assertNotNull(ulti.getStaticMastery(m.getId()));
-        }
-    }
-
-    /**
-     * @see api.Ulti#getStaticRealm()
-     */
-    @Test
-    public void testGetStaticRealm() {
-        Realm r = ulti.getStaticRealm();
-        Assert.assertNotNull(r);
-    }
-
-    /**
-     * @see api.Ulti#getStaticRuneList()
-     */
-    @Test
-    public void testGetStaticRuneList() {
-        RuneList rl = ulti.getStaticRuneList();
-        Assert.assertNotNull(rl);
-    }
-
-    /**
-     * @see Ulti#getStaticRune(int)
-     */
-    @Test
-    public void testGetStaticRune() {
-        RuneList rl = ulti.getStaticRuneList();
-        Iterator<Rune> iter = rl.getData().values().iterator();
-
-        while (iter.hasNext()) {
-            Rune r = iter.next();
-            Assert.assertNotNull(ulti.getStaticRune(r.getId()));
-        }
-    }
-
-    /**
-     * @see api.Ulti#getStaticSummonerSpellList()
-     */
-    @Test
-    public void testGetStaticSummonerSpellList() {
-        SummonerSpellList ssl = ulti.getStaticSummonerSpellList();
-        Assert.assertNotNull(ssl);
-    }
-
-    /**
-     * @see Ulti#getStaticSummonerSpell(int)
-     */
-    @Test
-    public void testGetStaticSummonerSpell() {
-        SummonerSpellList ssl = ulti.getStaticSummonerSpellList();
-        Iterator<SummonerSpell> iter = ssl.getData().values().iterator();
-
-        while (iter.hasNext()) {
-            SummonerSpell ss = iter.next();
-            Assert.assertNotNull(ss.getId());
-        }
-    }
-
-    /**
-     * @see api.Ulti#getStaticVersions()
-     */
-    @Test
-    public void testGetStaticVersions() {
-        List<String> v = ulti.getStaticVersions();
-        Assert.assertNotNull(v);
     }
 }

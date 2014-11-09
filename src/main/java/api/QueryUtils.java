@@ -90,13 +90,14 @@ class QueryUtils {
     }
 
     static String toStringList(Map<String, String> stringMap, String delim) {
-        Iterator<Map.Entry<String, String>> iter = stringMap.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> iterator = stringMap.entrySet().iterator();
         StringBuilder sb = new StringBuilder();
 
-        Map.Entry<String, String> entry = iter.next();
+        Map.Entry<String, String> entry = iterator.next();
         sb.append(entry.getKey() + "=" + entry.getValue());
 
-        while (iter.hasNext()) {
+        while (iterator.hasNext()) {
+            entry = iterator.next();
             sb.append(delim + entry.getKey() + "=" + entry.getValue());
         }
 

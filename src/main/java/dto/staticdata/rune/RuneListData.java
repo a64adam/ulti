@@ -19,35 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dto.staticdata.champion;
+package dto.staticdata.rune;
 
-import java.util.Map;
+public enum RuneListData {
+    ALL("all"),
+    COLLOQ("colloq"),
+    CONSUME_ON_FULL("consumeOnFull"),
+    CONSUMED("consumed"),
+    DEPTH("depth"),
+    FROM("from"),
+    GOLD("gold"),
+    GROUPS("groups"),
+    HIDE_FROM_ALL("hideFromAll"),
+    IMAGE("image"),
+    IN_STORE("inStore"),
+    INTO("into"),
+    MAPS("maps"),
+    REQUIRED_CHAMPION("requiredChampion"),
+    SANITIZED_DESCRIPTION("sanitizedChampion"),
+    SPECIAL_RECIPE("specialRecipe"),
+    STACKS("stacks"),
+    STATS("stats"),
+    TAGS("tags");
 
-public class ChampionList {
+    private final String value;
 
-    private Map<String, Champion> data;
-    private String format;
-    private Map<String, String> keys;
-    private String type;
-    private String version;
-
-    public Map<String, Champion> getData() {
-        return data;
+    RuneListData(String value) {
+        this.value = value;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public Map<String, String> getKeys() {
-        return keys;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getVersion() {
-        return version;
+    @Override
+    public String toString() {
+        return value;
     }
 }

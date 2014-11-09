@@ -19,35 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dto.staticdata.champion;
+package dto.staticdata.summonerspell;
 
-import java.util.Map;
+public enum SpellData {
+    ALL("all"),
+    COOLDOWN("cooldown"),
+    COOLDOWN_BURN("cooldownBurn"),
+    COST("cost"),
+    COST_BURN("costBurn"),
+    EFFECT("effect"),
+    EFFECT_BURN("effectBurn"),
+    IMAGE("image"),
+    KEY("key"),
+    LEVELTIP("leveltip"),
+    MAXRANK("maxrank"),
+    MODES("modes"),
+    RANGE("range"),
+    RANGE_BURN("rangeBurn"),
+    RESOURCE("resource"),
+    SANITIZED_DESCRIPTION("sanitizedDescription"),
+    SANITIZED_TOOLTIP("sanitizedTooltip"),
+    TOOLTIP("tooltip"),
+    VARS("vars");
 
-public class ChampionList {
+    private final String value;
 
-    private Map<String, Champion> data;
-    private String format;
-    private Map<String, String> keys;
-    private String type;
-    private String version;
-
-    public Map<String, Champion> getData() {
-        return data;
+    SpellData(String value) {
+        this.value = value;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public Map<String, String> getKeys() {
-        return keys;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getVersion() {
-        return version;
+    @Override
+    public String toString() {
+        return value;
     }
 }
