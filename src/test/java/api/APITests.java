@@ -63,7 +63,7 @@ public class APITests {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        ulti = new Ulti("db012a8a-e9c0-413d-9c97-9dffe07a91c5");
+        ulti = new Ulti("");
         ulti.setShortRateLimit(0.9);
         summonerId = 23287684l;
         teamId = "TEAM-fe3c3290-28e4-11e4-91d2-782bcb4d0bb2";
