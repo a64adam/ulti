@@ -40,7 +40,7 @@ public class ChampionQueryParams implements QueryParams {
     private ChampionQueryParams(Builder builder) {
         this.locale = builder.locale;
         this.version = builder.version;
-        this.dataById = builder.dateById;
+        this.dataById = builder.dataById;
         this.champData = builder.champData;
     }
 
@@ -58,24 +58,46 @@ public class ChampionQueryParams implements QueryParams {
     public static class Builder {
         private String locale;
         private String version;
-        private boolean dateById;
+        private boolean dataById;
         private ChampData[] champData;
 
+        /**
+         * @param  locale Locale code for returned data (e.g., en_US, es_ES). If not specified, the default
+         *         locale for the region is used.
+         */
         public Builder locale(String locale) {
             this.locale = locale;
             return this;
         }
 
+        /**
+         * @param   version Data dragon version for returned data. If not specified, the latest version for the region
+         *          is used. List of valid versions can be obtained from the /versions endpoint
+         *
+         * @see     api.Ulti#getStaticVersions()
+         */
         public Builder version(String version) {
             this.version = version;
             return this;
         }
 
-        public Builder dateById(boolean dateById) {
-            this.dateById = dateById;
+        /**
+         * @param   dataById If specified as true, the returned data map will use the champions' IDs as the keys.
+         *                   If not specified or specified as false, the returned data map will use the champions'
+         *                   keys instead.
+         */
+        public Builder dataById(boolean dataById) {
+            this.dataById = dataById;
             return this;
         }
 
+        /**
+         * @param   champData Tags to return additional data. Only type, version, data, id, key, name, and title are
+         *                    returned by default if this parameter isn't specified. To return all additional data,
+         *                    use the tag 'all'.
+         *
+         * @see     dto.staticdata.champion.ChampData
+         */
         public Builder champData(ChampData... champData) {
             this.champData = champData;
             return this;

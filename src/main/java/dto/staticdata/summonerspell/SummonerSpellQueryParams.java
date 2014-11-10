@@ -60,21 +60,43 @@ public class SummonerSpellQueryParams implements QueryParams {
         private boolean dataById;
         private SpellData[] spellData;
 
+        /**
+         * @param   locale Locale code for returned data (e.g., en_US, es_ES). If not specified, the default
+         *          locale for the region is used.
+         */
         public Builder locale(String locale) {
             this.locale = locale;
             return this;
         }
 
+        /**
+         * @param   version Data dragon version for returned data. If not specified, the latest version for the region
+         *          is used. List of valid versions can be obtained from the /versions endpoint
+         *
+         * @see     api.Ulti#getStaticVersions()
+         */
         public Builder version(String version) {
             this.version = version;
             return this;
         }
 
+        /**
+         * @param   dataById If specified as true, the returned data map will use the champions' IDs as the keys.
+         *                   If not specified or specified as false, the returned data map will use the champions'
+         *                   keys instead.
+         */
         public Builder dataById(boolean dataById) {
             this.dataById = dataById;
             return this;
         }
 
+        /**
+         * @param   spellData Tags to return additional data. Only type, version, data, id, key, name, description,
+         *                    and summonerLevel are returned by default if this parameter isn't specified. To return
+         *                    all additional data, use the tag 'all'.
+         *
+         * @see     dto.staticdata.summonerspell.SpellData
+         */
         public Builder spellData(SpellData... spellData) {
             this.spellData = spellData;
             return this;

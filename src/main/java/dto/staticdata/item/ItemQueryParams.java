@@ -56,16 +56,33 @@ public class ItemQueryParams implements QueryParams {
         private String version;
         private ItemListData[] itemListData;
 
+        /**
+         * @param   locale Locale code for returned data (e.g., en_US, es_ES). If not specified, the default
+         *          locale for the region is used.
+         */
         public Builder locale(String locale) {
             this.locale = locale;
             return this;
         }
 
+        /**
+         * @param   version Data dragon version for returned data. If not specified, the latest version for the region
+         *          is used. List of valid versions can be obtained from the /versions endpoint
+         *
+         * @see     api.Ulti#getStaticVersions()
+         */
         public Builder version(String version) {
             this.version = version;
             return this;
         }
 
+        /**
+         * @param   itemListData Tags to return additional data. Only type, version, basic, data, id, name, plaintext,
+         *                       group, and description are returned by default if this parameter isn't specified. To
+         *                       return all additional data, use the tag 'all'.
+         *
+         * @see     dto.staticdata.item.ItemListData
+         */
         public Builder itemListData(ItemListData... itemListData) {
             this.itemListData = itemListData;
             return this;

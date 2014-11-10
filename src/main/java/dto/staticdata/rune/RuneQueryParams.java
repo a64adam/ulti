@@ -56,16 +56,33 @@ public class RuneQueryParams implements QueryParams {
         private String version;
         private RuneListData[] runeListData;
 
+        /**
+         * @param   locale Locale code for returned data (e.g., en_US, es_ES). If not specified, the default
+         *          locale for the region is used.
+         */
         public Builder locale(String locale) {
             this.locale = locale;
             return this;
         }
 
+        /**
+         * @param   version Data dragon version for returned data. If not specified, the latest version for the region
+         *          is used. List of valid versions can be obtained from the /versions endpoint
+         *
+         * @see     api.Ulti#getStaticVersions()
+         */
         public Builder version(String version) {
             this.version = version;
             return this;
         }
 
+        /**
+         * @param   runeListData Tags to return additional data. Only type, version, data, id, name, rune, and
+         *                       description are returned by default if this parameter isn't specified. To return all
+         *                       additional data, use the tag 'all'.
+         *
+         * @see     dto.staticdata.rune.RuneListData
+         */
         public Builder runeListData(RuneListData... runeListData) {
             this.runeListData = runeListData;
             return this;

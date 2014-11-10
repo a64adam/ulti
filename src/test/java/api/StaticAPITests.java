@@ -78,7 +78,7 @@ public class StaticAPITests {
         ChampionQueryParams params = new ChampionQueryParams.Builder()
                 .locale(TEST_LOCALE)
                 .version(TEST_VERSION)
-                .dateById(true)
+                .dataById(true)
                 .champData(ChampData.ALL)
                 .build();
 
