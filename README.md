@@ -49,6 +49,26 @@ RuneList runes = ulti.getStaticRuneList();
 
 For a full list of calls, please see the javadoc [here](https://a64adam.github.io/ulti), or the official API reference from Riot [here](https://developer.riotgames.com/api/methods)
 
+## History
+v1.1
+- Incldues more powerful APIs for accessing static data via the static APIs. All the static APIs that accept optional parameters are supported!
+```
+ulti.getStaticChampionList(new ChampionQueryParams.Builder()
+            .locale("en_US")
+            .version("4.19.2")
+            .dataById(true)
+            .champData(ChampData.IMAGE, ChampData.LORE)
+            .build());
+```
+- Updated documentation to reflect support for Hexakill game mode
+- Bug fixes, including:
+  - Changed allytips in Champion class from String to List<String>
+  - Changed blocks in Recommended class from List<String> to List<Block>
+- setShortRateLimit and setLongRateLimit had their parameter types changed from Integer to Double
+
+v1.0
+- Initial release
+
 ## License
 ```
 The MIT License (MIT)
