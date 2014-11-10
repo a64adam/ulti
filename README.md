@@ -50,7 +50,7 @@ RuneList runes = ulti.getStaticRuneList();
 For a full list of calls, please see the javadoc [here](https://a64adam.github.io/ulti), or the official API reference from Riot [here](https://developer.riotgames.com/api/methods)
 
 ## History
-v1.1
+**v1.1**
 - Incldues more powerful APIs for accessing static data via the static APIs. All the static APIs that accept optional parameters are supported!
 ```
 ulti.getStaticChampionList(new ChampionQueryParams.Builder()
@@ -66,7 +66,7 @@ ulti.getStaticChampionList(new ChampionQueryParams.Builder()
   - Changed blocks in Recommended class from List<String> to List<Block>
 - setShortRateLimit and setLongRateLimit had their parameter types changed from Integer to Double
 
-v1.0
+**v1.0**
 - Initial release
 
 ## License
