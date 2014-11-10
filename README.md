@@ -62,9 +62,9 @@ ulti.getStaticChampionList(new ChampionQueryParams.Builder()
 ```
 - Updated documentation to reflect support for Hexakill game mode
 - Bug fixes, including:
-  - Changed allytips in Champion class from String to List<String>
-  - Changed blocks in Recommended class from List<String> to List<Block>
-- setShortRateLimit and setLongRateLimit had their parameter types changed from Integer to Double
+  - Changed **allytips** in Champion class from *String* to *List\<String\>*
+  - Changed **blocks** in Recommended class from *List<String>* to *List\<Block\>*
+- Utli#setShortRateLimit and Ulti#setLongRateLimit had their parameter types changed from *Integer* to *Double*
 
 **v1.0**
 - Initial release
