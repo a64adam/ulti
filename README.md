@@ -49,7 +49,7 @@ RuneList runes = ulti.getStaticRuneList();
 
 For a full list of calls, please see the javadoc [here](https://a64adam.github.io/ulti), or the official API reference from Riot [here](https://developer.riotgames.com/api/methods)
 
-## History
+## Change List
 **v1.1**
 - Incldues more powerful APIs for accessing static data via the static APIs. All the static APIs that accept optional parameters are supported!
 ```
