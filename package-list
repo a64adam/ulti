@@ -6,6 +6,12 @@ dto.league
 dto.match
 dto.matchhistory
 dto.staticdata
+dto.staticdata.champion
+dto.staticdata.item
+dto.staticdata.mastery
+dto.staticdata.realm
+dto.staticdata.rune
+dto.staticdata.summonerspell
 dto.stats
 dto.status
 dto.summoner
