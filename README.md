@@ -16,9 +16,24 @@ Ulti provides you with
 
 ## Download
 
+**Maven**
+```
+<dependency>
+    <groupId>com.github.a64adam</groupId>
+    <artifactId>ulti</artifactId>
+    <version>1.1</version>
+</dependency>
+```
+
+**Gradle**
+```
+compile 'com.github.a64adam:ulti:1.1'
+```
+
+**Downloadable jar***
+
 Downloadable .jars can be found on the [GitHub releases page](https://github.com/a64adam/ulti/releases)
 
-Gradle and Maven support are coming soon.
 
 ## Usage
 Getting started with Ulti is simple:
