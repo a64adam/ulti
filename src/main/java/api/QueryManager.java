@@ -186,11 +186,8 @@ class QueryManager {
         longRateLimiter.setRate(qps);
     }
 
-    void setEndpoint(Region region) {
-        endpoint = endpoints.get(region);
-    }
-
     void setRegion(Region region) {
         this.region = region;
+        endpoint = endpoints.get(region);
     }
 }

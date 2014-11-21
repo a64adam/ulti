@@ -123,7 +123,7 @@ public class Ulti {
      * @param region region to use
      */
     public void setRegion(Region region) {
-        api.setEndpoint(region);
+        api.setRegion(region);
     }
 
     /**
