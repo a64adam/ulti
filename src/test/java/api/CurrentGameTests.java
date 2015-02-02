@@ -14,7 +14,7 @@ public class CurrentGameTests {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        ulti = new Ulti("db012a8a-e9c0-413d-9c97-9dffe07a91c5");
+        ulti = new Ulti("");
         ulti.setShortRateLimit(0.9);
         summonerId = 23287684l;
     }
