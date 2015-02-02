@@ -19,35 +19,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dto;
+package dto.currentgame;
 
-public enum Region {
-    NA("na", "NA1"),
-    EUW("euw", "EUW1"),
-    EUNE("eune", "EUN1"),
-    KR("kr", "KR"),
-    BR("br", "BR1"),
-    LAS("las", "LA2"),
-    LAN("lan", "LA1"),
-    OCE("oce", "OC1"),
-    TR("tr", "TR1"),
-    RU("ru", "RU"),
-    GLOBAL("global", "");
+public class BannedChampion {
+    private long championId;
+    private int pickTurn;
+    private long teamId;
 
-    private String region;
-    private String platformId;
-
-    Region(String region, String platformId) {
-        this.region = region;
-        this.platformId = platformId;
+    /**
+     * @return  the ID of the banned champion
+     */
+    public long getChampionId() {
+        return championId;
     }
 
-    public String toPlatformId() {
-        return platformId;
+    /**
+     * @return  the turn during which the champion was banned
+     */
+    public int getPickTurn() {
+        return pickTurn;
     }
 
-    @Override
-    public String toString() {
-        return region;
+    /**
+     * @return  the ID of the team that banned the champion
+     */
+    public long getTeamId() {
+        return teamId;
     }
 }

@@ -19,35 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dto;
+package dto.currentgame;
 
-public enum Region {
-    NA("na", "NA1"),
-    EUW("euw", "EUW1"),
-    EUNE("eune", "EUN1"),
-    KR("kr", "KR"),
-    BR("br", "BR1"),
-    LAS("las", "LA2"),
-    LAN("lan", "LA1"),
-    OCE("oce", "OC1"),
-    TR("tr", "TR1"),
-    RU("ru", "RU"),
-    GLOBAL("global", "");
+public class Observer {
+    private String encryptionKey;
 
-    private String region;
-    private String platformId;
-
-    Region(String region, String platformId) {
-        this.region = region;
-        this.platformId = platformId;
-    }
-
-    public String toPlatformId() {
-        return platformId;
-    }
-
-    @Override
-    public String toString() {
-        return region;
+    public String getEncryptionKey() {
+        return encryptionKey;
     }
 }

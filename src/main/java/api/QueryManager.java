@@ -41,21 +41,24 @@ class QueryManager {
     private static final double DEFAULT_SHORT_RATE_LIMIT = 10 / 10.0;
     private static final double DEFAULT_LONG_RATE_LIMIT = 600 / 500.0;
 
+    private static final String RESOURCE_PATH = "api/lol/";
+    private static final String OBSERVER_PATH = "observer-mode/rest/";
+
     /**
      * Maintains a mapping of each region to their respective endpoints
      */
     private static final Map<Region, String> endpoints = new HashMap<Region, String>();
     static {
-        endpoints.put(Region.NA, "https://na.api.pvp.net/api/lol/");
-        endpoints.put(Region.EUW, "https://euw.api.pvp.net/api/lol/");
-        endpoints.put(Region.EUNE, "https://kr.api.pvp.net/api/lol/");
-        endpoints.put(Region.BR, "https://br.api.pvp.net/api/lol/");
-        endpoints.put(Region.LAS, "https://las.api.pvp.net/api/lol/");
-        endpoints.put(Region.LAN, "https://lan.api.pvp.net/api/lol/");
-        endpoints.put(Region.OCE, "https://oce.api.pvp.net/api/lol/");
-        endpoints.put(Region.TR, "https://tr.api.pvp.net/api/lol/");
-        endpoints.put(Region.RU, "https://ru.api.pvp.net/api/lol/");
-        endpoints.put(Region.GLOBAL, "https://global.api.pvp.net/api/lol/");
+        endpoints.put(Region.NA, "https://na.api.pvp.net/");
+        endpoints.put(Region.EUW, "https://euw.api.pvp.net/");
+        endpoints.put(Region.EUNE, "https://kr.api.pvp.net/");
+        endpoints.put(Region.BR, "https://br.api.pvp.net/");
+        endpoints.put(Region.LAS, "https://las.api.pvp.net/");
+        endpoints.put(Region.LAN, "https://lan.api.pvp.net/");
+        endpoints.put(Region.OCE, "https://oce.api.pvp.net/");
+        endpoints.put(Region.TR, "https://tr.api.pvp.net/");
+        endpoints.put(Region.RU, "https://ru.api.pvp.net/");
+        endpoints.put(Region.GLOBAL, "https://global.api.pvp.net/");
     }
 
     private String apiKey;
@@ -95,7 +98,15 @@ class QueryManager {
     Reader query(String path, Map<String, String> params) {
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + region + "/" + path + "?api_key=" + apiKey + getParams(params))
+                .url(endpoint + RESOURCE_PATH + region + "/" + path + "?api_key=" + apiKey + getParams(params))
+                .build();
+
+        return executeRequest(request, true);
+    }
+
+    Reader observerQuery(String path) {
+        Request request = new Request.Builder()
+                .url(endpoint + OBSERVER_PATH + path + "?api_key=" + apiKey)
                 .build();
 
         return executeRequest(request, true);
@@ -108,7 +119,7 @@ class QueryManager {
     Reader staticQuery(String path, Map<String, String> params) {
         // Build request
         Request request = new Request.Builder()
-                .url(endpoint + "static-data/" + region + "/" + path + "?api_key=" + apiKey + getParams(params))
+                .url(endpoint + RESOURCE_PATH + "static-data/" + region + "/" + path + "?api_key=" + apiKey + getParams(params))
                 .build();
 
         return executeRequest(request, false);
@@ -189,5 +200,9 @@ class QueryManager {
     void setRegion(Region region) {
         this.region = region;
         endpoint = endpoints.get(region);
+    }
+
+    Region getRegion() {
+        return region;
     }
 }

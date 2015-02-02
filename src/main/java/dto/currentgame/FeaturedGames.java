@@ -19,35 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package dto;
+package dto.currentgame;
 
-public enum Region {
-    NA("na", "NA1"),
-    EUW("euw", "EUW1"),
-    EUNE("eune", "EUN1"),
-    KR("kr", "KR"),
-    BR("br", "BR1"),
-    LAS("las", "LA2"),
-    LAN("lan", "LA1"),
-    OCE("oce", "OC1"),
-    TR("tr", "TR1"),
-    RU("ru", "RU"),
-    GLOBAL("global", "");
+import java.util.List;
 
-    private String region;
-    private String platformId;
+public class FeaturedGames {
 
-    Region(String region, String platformId) {
-        this.region = region;
-        this.platformId = platformId;
+    private long clientRefreshInterval;
+    private List<CurrentGameInfo> gameList;
+
+    public long getClientRefreshInterval() {
+        return clientRefreshInterval;
     }
 
-    public String toPlatformId() {
-        return platformId;
-    }
-
-    @Override
-    public String toString() {
-        return region;
+    public List<CurrentGameInfo> getGameList() {
+        return gameList;
     }
 }

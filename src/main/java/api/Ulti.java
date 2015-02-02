@@ -26,6 +26,8 @@ import com.google.gson.reflect.TypeToken;
 import dto.Region;
 import dto.champion.Champion;
 import dto.champion.ChampionList;
+import dto.currentgame.CurrentGameInfo;
+import dto.currentgame.FeaturedGames;
 import dto.game.RecentGames;
 import dto.league.League;
 import dto.league.QueueType;
@@ -82,6 +84,8 @@ public class Ulti {
         versions.put("matchhistory", "v2.2");
         versions.put("stats", "v1.3");
         versions.put("lol-status", "v1.0");
+        versions.put("current-game", "v1.0");
+        versions.put("featured-games", "v1.0");
     }
 
     private final QueryManager api;
@@ -553,6 +557,29 @@ public class Ulti {
         Reader json = api.query(versions.get("matchhistory") + "/matchhistory/" + summonerId);
 
         return gson.fromJson(json, PlayerHistory.class);
+    }
+
+    /**
+     * Queries for the current game that the summoner represented by {@code summonerId} is in.
+     *
+     * @param   summonerId the ID of the summoner
+     * @return  a {@link dto.currentgame.CurrentGameInfo} representing the current game information
+     */
+    public CurrentGameInfo getCurrentGameInfo(long summonerId) {
+        Reader json = api.observerQuery("consumer/getSpectatorGameInfo/" + api.getRegion().toPlatformId() + "/" + summonerId);
+
+        return gson.fromJson(json, CurrentGameInfo.class);
+    }
+
+    /**
+     * Queries for the featured games
+     *
+     * @return  a {@link dto.currentgame.FeaturedGames} representing the current featured games
+     */
+    public FeaturedGames getFeaturedGames() {
+        Reader json = api.observerQuery("featured");
+
+        return gson.fromJson(json, FeaturedGames.class);
     }
 
     /**
