@@ -21,13 +21,13 @@ Ulti provides you with
 <dependency>
     <groupId>com.github.a64adam</groupId>
     <artifactId>ulti</artifactId>
-    <version>1.2</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
 **Gradle**
 ```
-compile 'com.github.a64adam:ulti:1.2'
+compile 'com.github.a64adam:ulti:1.2.0'
 ```
 
 **Downloadable jar***
